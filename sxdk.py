@@ -58,7 +58,7 @@ class GenerateShellcode:
         shell_data = e.read()
         c= os.path.getsize(name)
         b = b - c
-        total_nop = b // (sys.getsizeof(asm('nop'))//4)
+        total_nop = b
 
         f.write("{0}{1}{2}".format(asm('nop')*total_nop, shell_data, struct.pack(endian_flag,self.starting_address)*self.num_of_addresses))
 
