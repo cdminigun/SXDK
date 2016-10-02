@@ -1,0 +1,1 @@
+apt-get install binutils binutils-powerpc64-linux-gnu binutils-powerpc-linux-gnu binutils-mips-linux-gnu binutils-arm-linux-gnu binutils-mips64-linux-gnu binutils-amd-linux-gnu binutils-amd64-linux-gnu binutils-ia64-linux-gnu binutils-ia386-linux-gnu
