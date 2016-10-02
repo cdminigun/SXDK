@@ -190,10 +190,10 @@ class Ui_Main(object):
 		start = self.Saddr.text();
 		ofile =  self.FilenameLE.text();
 
-        genshell = GenerateShellcode(addsz, NOP, os, bit, start, offset, endian)
-        genshell.parse_inputs()
-        genshell.write_file(ofile)
-        num_of_addresses, total_size, operating_system, architecture, starting_address, offset, endianness
+                genshell = GenerateShellcode(addsz, NOP, os, bit, start, offset, endian)
+                genshell.parse_inputs()
+                genshell.write_file(ofile)
+                num_of_addresses, total_size, operating_system, architecture, starting_address, offset, endianness
 	#	self.output = QtGui.QLabel(self.centralwidget)
 
 	#	self.output.setGeometry(QtCore.QRect(110, 266, 391, 91))
