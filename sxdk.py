@@ -4,7 +4,7 @@ import argparse
 import struct
 import sys
 
-os_types = ["linux", "windows", "freebsd"]
+os_types = ["linux", "windows", "freebsd", "bsd", "BSD", "Linux"]
 binuti_is = {"ppc64" : 'powerpc64', "ppc": 'powerpc',  "mips64": 'mips64', "thumb":'thumb', "amd64" : 'amd64', "x86":'i386', "mips":'mips', "x86_64" : 'ia64', "arm": 'arm' }
 shells = {"ppc":"ppc.shell", "ppc64":"ppc.shell", "mips":"mips.shell", "mips64":"mips.shell", "x86_64":"lin64.shell", "x86":"lin86.shell"}
 
