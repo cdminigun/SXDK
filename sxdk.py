@@ -38,8 +38,8 @@ class GenerateShellcode:
             raise SXDK("Input into operating_system is wrong.")
         context.os = self.shell_os.lower()
         self.shell_os = self.shell_os.lower()
-        if self.architecture != 32 or self.architecture != 64:
-            raise SXDK("Input into architecture is wrong.")
+        #if self.architecture != 32 or self.architecture != 64:
+        #    raise SXDK("Input into architecture is wrong.")
         context.bits = self.architecture
         if "little" in self.endianness or "big" in self.endianness:
             context.endian = self.endianness
