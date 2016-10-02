@@ -170,7 +170,7 @@ class Ui_Main(object):
 
     def btnSave(self):
 		os = self.OS_CB.currentText();
-		endian = self.EndiancomboBox.currentText();
+		endian = str(self.EndiancomboBox.currentText());
                 if 'little' in endian.lower():
                         endian = 'little'
                 else:
