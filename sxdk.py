@@ -48,7 +48,7 @@ class GenerateShellcode:
 
     def write_file(self, name):
         b = self.total_size - (4*self.num_of_addresses)
-        e = open(shells[self.instruction_set], "r")
+        e = open(shells[self.instruction_set.lower()], "r")
         f = open(name, "w")
         shell_data = e.read()
         b = b - sys.getsizeof(shell_data)
