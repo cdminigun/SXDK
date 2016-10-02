@@ -46,11 +46,11 @@ class GenerateShellcode:
             raise SXDK("Input into endianness is wrong.")
 
     def write_file(self, name):
-        if little in self.endianness:
+        if "little" in self.endianness:
             endian_flag = "<L"
         else:
             endian_flag = ">L"
-        
+
         b = self.total_size - (4*self.num_of_addresses)
         e = open(shells[self.instruction_set.lower()], "r")
         f = open(name, "w")
