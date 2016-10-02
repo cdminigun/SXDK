@@ -5,7 +5,8 @@
 # Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
-
+#import "sxdk.py"
+import os
 import sys
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import *
@@ -95,16 +96,21 @@ class Ui_Main(object):
         self.OSLabel.setGeometry(QtCore.QRect(280, 40, 161, 21))
         self.OSLabel.setObjectName(_fromUtf8("OSLabel"))
 #	setting up the clear button
-        self.Clear = QtGui.QPushButton(self.centralwidget)
-        self.Clear.setGeometry(QtCore.QRect(20, 410, 98, 27))
-        self.Clear.setObjectName(_fromUtf8("Clear"))
-	#self.Clear.clicked.connect(self.btnClear)
-	QObject.connect(self.Clear,SIGNAL("clicked()"),self.btnClear)
+        self.bClear = QtGui.QPushButton(self.centralwidget)
+        self.bClear.setGeometry(QtCore.QRect(20, 410, 98, 27))
+        self.bClear.setObjectName(_fromUtf8("Clear"))
+	self.bClear.clicked.connect(self.btnClear)
+
+
+
+	#QObject.connect(self.Clear,SIGNAL("clicked()"),self.btnClear)
 #	Setting up the save button
         self.Save = QtGui.QPushButton(self.centralwidget)
         self.Save.setGeometry(QtCore.QRect(490, 410, 98, 27))
         self.Save.setObjectName(_fromUtf8("Save"))
+
 	self.Save.clicked.connect(self.btnSave)
+	self.bClear.clicked.connect(self.btnClear)
 
         self.offset = QtGui.QSpinBox(self.centralwidget)
         self.offset.setGeometry(QtCore.QRect(190, 140, 61, 27))
@@ -113,10 +119,31 @@ class Ui_Main(object):
         self.radioButton64_2 = QtGui.QRadioButton(self.centralwidget)
         self.radioButton64_2.setGeometry(QtCore.QRect(10, 190, 101, 21))
         self.radioButton64_2.setObjectName(_fromUtf8("radioButton64_2"))
-        self.radioButton64_3 = QtGui.QRadioButton(self.centralwidget)
+        self.radioButton64_2.clicked.connect(self.radio32)
+
+	self.radioButton64_3 = QtGui.QRadioButton(self.centralwidget)
         self.radioButton64_3.setGeometry(QtCore.QRect(150, 190, 101, 21))
         self.radioButton64_3.setObjectName(_fromUtf8("radioButton64_3"))
+	self.radioButton64_3.clicked.connect(self.radio64);
+
 #	setting up the radio buttons for 32 and 64
+
+	self.FilenameLE = QtGui.QLineEdit(self.centralwidget)
+        self.FilenameLE.setGeometry(QtCore.QRect(450, 140, 151, 27))
+        self.FilenameLE.setObjectName(_fromUtf8("FilenameLE"))
+        self.FileNamelabel = QtGui.QLabel(self.centralwidget)
+        self.FileNamelabel.setGeometry(QtCore.QRect(280, 140, 151, 31))
+        self.FileNamelabel.setObjectName(_fromUtf8("FileNamelabel"))
+        self.EndiancomboBox = QtGui.QComboBox(self.centralwidget)
+        self.EndiancomboBox.setGeometry(QtCore.QRect(450, 190, 151, 27))
+        self.EndiancomboBox.setObjectName(_fromUtf8("EndiancomboBox"))
+        self.EndiancomboBox.addItem(_fromUtf8(""))
+        self.EndiancomboBox.addItem(_fromUtf8(""))
+        self.endianLabel = QtGui.QLabel(self.centralwidget)
+        self.endianLabel.setGeometry(QtCore.QRect(280, 196, 131, 21))
+        self.endianLabel.setObjectName(_fromUtf8("endianLabel"))
+
+
 	Main.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(Main)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 615, 27))
@@ -139,26 +166,41 @@ class Ui_Main(object):
        # Main.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar_4)
 
         self.retranslateUi(Main)
-        QtCore.QObject.connect(self.Clear, QtCore.SIGNAL(_fromUtf8("clicked()")), self.Clear.click)
-        QtCore.QObject.connect(Main, QtCore.SIGNAL(_fromUtf8("toolButtonStyleChanged(Qt::ToolButtonStyle)")), self.radioButton64_2.toggle)
-        QtCore.QMetaObject.connectSlotsByName(Main)
+        #QtCore.QObject.connect(self.Clear, QtCore.SIGNAL(_fromUtf8("clicked()")), self.Clear.click)
+        #QtCore.QObject.connect(Main, QtCore.SIGNAL(_fromUtf8("toolButtonStyleChanged(Qt::ToolButtonStyle)")), self.radioButton64_2.toggle)
+        #QtCore.QMetaObject.connectSlotsByName(Main)
 #	if x == False: 
 #		x = True	
-    @QtCore.pyqtSlot()
+    def radio64(self):
+	bit = 64
+    def radio32(self):
+	bit = 32	
     def btnClear(self):
 		self.Nopslide.setValue(0)
 		self.Addrsz.setValue(0);
 		self.offset.setValue(0);
 		self.Saddr.setText("");
 	
-    def btnSave(self):
-	file_dialog, _ = QFileDialog.getSaveFileName(self, "Save File",QDir.currentPath())
-	file_dialog.setNameFilters("Text files (*.txt);;Images (*.png *.jpg)")
-	file_dialog.selectNameFilter("Images (*.png *.jpg)")
+    def btnSave(self):	
+		os = self.OS_CB.currentText();
+		endian = self.EndiancomboBox.currentText();
+		NOP = self.Nopslide.value();
+		addsz = self.Addrsz.value();
+		offset = self.offset.value();
+		start = self.Saddr.text();			
+		ofile =  self.FilenameLE.text();
+		
+	#	self.output = QtGui.QLabel(self.centralwidget)
+
+	#	self.output.setGeometry(QtCore.QRect(110, 266, 391, 91))
+	 #       self.output.setStyleSheet(_fromUtf8("font: 18pt \"Monospace\";"))
+        #	self.output.setObjectName(_fromUtf8("output"))
+		
+		
 
     def retranslateUi(self, Main):
         Main.setWindowTitle(_translate("Main", "Shell Exploit Development kit", None))
-        self.NOPLabel.setText(_translate("Main", "NOP instructions", None))
+        self.NOPLabel.setText(_translate("Main", "Total Size ", None))
         self.AddrszLabel.setText(_translate("Main", "Address blocks", None))
         self.OffsetLabel.setText(_translate("Main", "Offset size ", None))
         self.SAddrLabel.setText(_translate("Main", "Starting Address", None))
@@ -186,12 +228,20 @@ class Ui_Main(object):
         self.OS_CB.setItemText(21, _translate("Main", "Alpha", None))
         self.OS_CB.setItemText(22, _translate("Main", "AIX", None))
         self.OSLabel.setText(_translate("Main", "Operating System", None))
-        self.Clear.setText(_translate("Main", "Clear", None))
+        self.bClear.setText(_translate("Main", "Clear", None))
         self.Save.setText(_translate("Main", "Save", None))
         self.radioButton64_2.setText(_translate("Main", "32-bit", None))
         self.radioButton64_3.setText(_translate("Main", "64-bit", None))
-        #self.toolBar.setWindowTitle(_translate("Main", "toolBar", None))
-       # self.toolBar_2.setWindowTitle(_translate("Main", "toolBar_2", None))
+      #  self.toolBar.setWindowTitle(_translate("Main", "toolBar", None))
+       
+	self.FileNamelabel.setText(_translate("Main", "File name", None))
+
+
+	self.EndiancomboBox.setItemText(0, _translate("Main", "Little Endian", None))
+        self.EndiancomboBox.setItemText(1, _translate("Main", "Big Endian", None))
+        self.endianLabel.setText(_translate("Main", "Endianess", None))
+
+	# self.toolBar_2.setWindowTitle(_translate("Main", "toolBar_2", None))
         #self.toolBar_3.setWindowTitle(_translate("Main", "toolBar_3", None))
         #self.toolBar_4.setWindowTitle(_translate("Main", "toolBar_4", None))
 
