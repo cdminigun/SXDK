@@ -52,7 +52,7 @@ class GenerateShellcode:
         f = open(name, "w")
         shell_data = e.read()
         b = b - sys.getsizeof(shell_data)
-        total_nop = b // sys.getsizeof(asm('nop'))//4
+        total_nop = b // (sys.getsizeof(asm('nop'))//4)
 
         f.write("{0}{1}{2}".format(asm('nop')*total_nop, shell_data, struct.pack('<L',self.starting_address)*self.num_of_addresses))
         #f.close()
