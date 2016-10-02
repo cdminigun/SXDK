@@ -175,7 +175,7 @@ class Ui_Main(object):
                         endian = 'little'
                 else:
                         endian = 'big'
-		
+
                 NOP = self.Nopslide.value();
 		addsz = self.Addrsz.value();
 		offset = self.offset.value();
@@ -185,7 +185,6 @@ class Ui_Main(object):
                 genshell = GenerateShellcode(int(addsz), int(NOP), str(os), bit, str(start), int(offset), str(endian))
                 genshell.parse_inputs()
                 genshell.write_file(ofile)
-                num_of_addresses, total_size, operating_system, architecture, starting_address, offset, endianness
 	#	self.output = QtGui.QLabel(self.centralwidget)
 
 	#	self.output.setGeometry(QtCore.QRect(110, 266, 391, 91))
