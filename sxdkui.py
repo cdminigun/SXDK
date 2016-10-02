@@ -171,13 +171,17 @@ class Ui_Main(object):
     def btnSave(self):
 		os = self.OS_CB.currentText();
 		endian = self.EndiancomboBox.currentText();
+        if 'little' in endian.lower():
+            endian = 'little'
+        else:
+            endian = 'big'
 		NOP = self.Nopslide.value();
 		addsz = self.Addrsz.value();
 		offset = self.offset.value();
 		start = self.Saddr.text();
 		ofile =  self.FilenameLE.text();
 
-                genshell = GenerateShellcode(addsz, NOP, str(os), bit, str(start), offset, str(endian))
+                genshell = GenerateShellcode(int(addsz), int(NOP), str(os), int(bit), str(start), int(offset), str(endian))
                 genshell.parse_inputs()
                 genshell.write_file(ofile)
                 num_of_addresses, total_size, operating_system, architecture, starting_address, offset, endianness
