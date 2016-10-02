@@ -16,7 +16,6 @@ class GenerateShellcode:
         self.num_of_addresses = num_of_addresses
         self.total_size = total_size
         self.operating_system = operating_system
-        print architecture
         self.architecture = int(architecture)
         self.starting_address = starting_address
         self.offset = offset
