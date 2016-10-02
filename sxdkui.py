@@ -192,7 +192,7 @@ class Ui_Main(object):
 		start = self.Saddr.text();
 		ofile =  self.FilenameLE.text();
 
-                genshell = GenerateShellcode(addsz, NOP, str(os), bit, start, offset, str(endian))
+                genshell = GenerateShellcode(addsz, NOP, str(os), bit, str(start), offset, str(endian))
                 genshell.parse_inputs()
                 genshell.write_file(ofile)
                 num_of_addresses, total_size, operating_system, architecture, starting_address, offset, endianness
