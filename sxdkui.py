@@ -5,7 +5,7 @@
 # Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
-#import "sxdk.py"
+import "sxdk.py"
 import os
 import sys
 from PyQt4 import QtCore, QtGui
@@ -169,34 +169,38 @@ class Ui_Main(object):
         #QtCore.QObject.connect(self.Clear, QtCore.SIGNAL(_fromUtf8("clicked()")), self.Clear.click)
         #QtCore.QObject.connect(Main, QtCore.SIGNAL(_fromUtf8("toolButtonStyleChanged(Qt::ToolButtonStyle)")), self.radioButton64_2.toggle)
         #QtCore.QMetaObject.connectSlotsByName(Main)
-#	if x == False: 
-#		x = True	
+#	if x == False:
+#		x = True
     def radio64(self):
 	bit = 64
     def radio32(self):
-	bit = 32	
+	bit = 32
     def btnClear(self):
 		self.Nopslide.setValue(0)
 		self.Addrsz.setValue(0);
 		self.offset.setValue(0);
 		self.Saddr.setText("");
-	
-    def btnSave(self):	
+
+    def btnSave(self):
 		os = self.OS_CB.currentText();
 		endian = self.EndiancomboBox.currentText();
 		NOP = self.Nopslide.value();
 		addsz = self.Addrsz.value();
 		offset = self.offset.value();
-		start = self.Saddr.text();			
+		start = self.Saddr.text();
 		ofile =  self.FilenameLE.text();
-		
+
+        genshell = GenerateShellcode(addsz, NOP, os, bit, start, offset, endian)
+        genshell.parse_inputs()
+        genshell.write_file(ofile)
+        num_of_addresses, total_size, operating_system, architecture, starting_address, offset, endianness
 	#	self.output = QtGui.QLabel(self.centralwidget)
 
 	#	self.output.setGeometry(QtCore.QRect(110, 266, 391, 91))
 	 #       self.output.setStyleSheet(_fromUtf8("font: 18pt \"Monospace\";"))
         #	self.output.setObjectName(_fromUtf8("output"))
-		
-		
+
+
 
     def retranslateUi(self, Main):
         Main.setWindowTitle(_translate("Main", "Shell Exploit Development kit", None))
@@ -233,7 +237,7 @@ class Ui_Main(object):
         self.radioButton64_2.setText(_translate("Main", "32-bit", None))
         self.radioButton64_3.setText(_translate("Main", "64-bit", None))
       #  self.toolBar.setWindowTitle(_translate("Main", "toolBar", None))
-       
+
 	self.FileNamelabel.setText(_translate("Main", "File name", None))
 
 
@@ -255,4 +259,3 @@ if __name__ == "__main__":
     ui.setupUi(Main)
     Main.show()
     sys.exit(app.exec_())
-
