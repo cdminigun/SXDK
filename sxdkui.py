@@ -6,7 +6,11 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+import sys
 from PyQt4 import QtCore, QtGui
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
+from PyQt4 import *
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -24,12 +28,14 @@ except AttributeError:
 
 class Ui_Main(object):
     def setupUi(self, Main):
+#	Setting up Main
         Main.setObjectName(_fromUtf8("Main"))
         Main.resize(615, 518)
         Main.setAutoFillBackground(True)
         Main.setStyleSheet(_fromUtf8("font: 12pt \"Monospace\";"))
         self.centralwidget = QtGui.QWidget(Main)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
+# 	Setting up NOPS
         self.NOPLabel = QtGui.QLabel(self.centralwidget)
         self.NOPLabel.setGeometry(QtCore.QRect(10, 40, 161, 31))
         self.NOPLabel.setObjectName(_fromUtf8("NOPLabel"))
@@ -38,6 +44,7 @@ class Ui_Main(object):
         self.Nopslide.setMinimumSize(QtCore.QSize(51, 0))
         self.Nopslide.setMaximum(2147483647)
         self.Nopslide.setObjectName(_fromUtf8("Nopslide"))
+#	setting up Addrsz
         self.AddrszLabel = QtGui.QLabel(self.centralwidget)
         self.AddrszLabel.setGeometry(QtCore.QRect(11, 90, 141, 31))
         self.AddrszLabel.setObjectName(_fromUtf8("AddrszLabel"))
@@ -49,6 +56,7 @@ class Ui_Main(object):
         self.Addrsz.setMinimumSize(QtCore.QSize(51, 0))
         self.Addrsz.setMaximum(2147483647)
         self.Addrsz.setObjectName(_fromUtf8("Addrsz"))
+#	setting Starting address
         self.Saddr = QtGui.QLineEdit(self.centralwidget)
         self.Saddr.setGeometry(QtCore.QRect(450, 90, 151, 27))
         self.Saddr.setMaxLength(10)
@@ -56,6 +64,7 @@ class Ui_Main(object):
         self.SAddrLabel = QtGui.QLabel(self.centralwidget)
         self.SAddrLabel.setGeometry(QtCore.QRect(280, 90, 161, 31))
         self.SAddrLabel.setObjectName(_fromUtf8("SAddrLabel"))
+#	setting up the Operating System cb
         self.OS_CB = QtGui.QComboBox(self.centralwidget)
         self.OS_CB.setGeometry(QtCore.QRect(450, 40, 151, 27))
         self.OS_CB.setObjectName(_fromUtf8("OS_CB"))
@@ -85,53 +94,67 @@ class Ui_Main(object):
         self.OSLabel = QtGui.QLabel(self.centralwidget)
         self.OSLabel.setGeometry(QtCore.QRect(280, 40, 161, 21))
         self.OSLabel.setObjectName(_fromUtf8("OSLabel"))
+#	setting up the clear button
         self.Clear = QtGui.QPushButton(self.centralwidget)
         self.Clear.setGeometry(QtCore.QRect(20, 410, 98, 27))
         self.Clear.setObjectName(_fromUtf8("Clear"))
-	self.Clear.clicked.connect(self.clear)
+	#self.Clear.clicked.connect(self.btnClear)
+	QObject.connect(self.Clear,SIGNAL("clicked()"),self.btnClear)
+#	Setting up the save button
         self.Save = QtGui.QPushButton(self.centralwidget)
         self.Save.setGeometry(QtCore.QRect(490, 410, 98, 27))
         self.Save.setObjectName(_fromUtf8("Save"))
-        self.spinBox = QtGui.QSpinBox(self.centralwidget)
-        self.spinBox.setGeometry(QtCore.QRect(190, 140, 61, 27))
-        self.spinBox.setMaximum(2147483647)
-        self.spinBox.setObjectName(_fromUtf8("spinBox"))
+	self.Save.clicked.connect(self.btnSave)
+
+        self.offset = QtGui.QSpinBox(self.centralwidget)
+        self.offset.setGeometry(QtCore.QRect(190, 140, 61, 27))
+        self.offset.setMaximum(2147483647)
+        self.offset.setObjectName(_fromUtf8("spinBox"))
         self.radioButton64_2 = QtGui.QRadioButton(self.centralwidget)
         self.radioButton64_2.setGeometry(QtCore.QRect(10, 190, 101, 21))
         self.radioButton64_2.setObjectName(_fromUtf8("radioButton64_2"))
         self.radioButton64_3 = QtGui.QRadioButton(self.centralwidget)
         self.radioButton64_3.setGeometry(QtCore.QRect(150, 190, 101, 21))
         self.radioButton64_3.setObjectName(_fromUtf8("radioButton64_3"))
-        Main.setCentralWidget(self.centralwidget)
+#	setting up the radio buttons for 32 and 64
+	Main.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(Main)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 615, 27))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         Main.setMenuBar(self.menubar)
-        self.statusbar = QtGui.QStatusBar(Main)
-        self.statusbar.setObjectName(_fromUtf8("statusbar"))
-        Main.setStatusBar(self.statusbar)
-        self.toolBar = QtGui.QToolBar(Main)
-        self.toolBar.setObjectName(_fromUtf8("toolBar"))
-        Main.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
-        self.toolBar_2 = QtGui.QToolBar(Main)
-        self.toolBar_2.setObjectName(_fromUtf8("toolBar_2"))
-        Main.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar_2)
-        self.toolBar_3 = QtGui.QToolBar(Main)
-        self.toolBar_3.setObjectName(_fromUtf8("toolBar_3"))
-        Main.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar_3)
-        self.toolBar_4 = QtGui.QToolBar(Main)
-        self.toolBar_4.setObjectName(_fromUtf8("toolBar_4"))
-        Main.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar_4)
+        #self.statusbar = QtGui.QStatusBar(Main)
+        #self.statusbar.setObjectName(_fromUtf8("statusbar"))
+        #Main.setStatusBar(self.statusbar)
+        #self.toolBar = QtGui.QToolBar(Main)
+        #self.toolBar.setObjectName(_fromUtf8("toolBar"))
+        #Main.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
+        #self.toolBar_2 = QtGui.QToolBar(Main)
+        #self.toolBar_2.setObjectName(_fromUtf8("toolBar_2"))
+        #Main.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar_2)
+        #self.toolBar_3 = QtGui.QToolBar(Main)
+        #self.toolBar_3.setObjectName(_fromUtf8("toolBar_3"))
+        #Main.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar_3)
+        #self.toolBar_4 = QtGui.QToolBar(Main)
+        #self.toolBar_4.setObjectName(_fromUtf8("toolBar_4"))
+       # Main.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar_4)
 
         self.retranslateUi(Main)
         QtCore.QObject.connect(self.Clear, QtCore.SIGNAL(_fromUtf8("clicked()")), self.Clear.click)
         QtCore.QObject.connect(Main, QtCore.SIGNAL(_fromUtf8("toolButtonStyleChanged(Qt::ToolButtonStyle)")), self.radioButton64_2.toggle)
         QtCore.QMetaObject.connectSlotsByName(Main)
+#	if x == False: 
+#		x = True	
+    @QtCore.pyqtSlot()
+    def btnClear(self):
+		self.Nopslide.setValue(0)
+		self.Addrsz.setValue(0);
+		self.offset.setValue(0);
+		self.Saddr.setText("");
 	
-
-    def clear(self):
-	self.Nopslide.setValue(0)
-	
+    def btnSave(self):
+	file_dialog, _ = QFileDialog.getSaveFileName(self, "Save File",QDir.currentPath())
+	file_dialog.setNameFilters("Text files (*.txt);;Images (*.png *.jpg)")
+	file_dialog.selectNameFilter("Images (*.png *.jpg)")
 
     def retranslateUi(self, Main):
         Main.setWindowTitle(_translate("Main", "Shell Exploit Development kit", None))
@@ -167,12 +190,11 @@ class Ui_Main(object):
         self.Save.setText(_translate("Main", "Save", None))
         self.radioButton64_2.setText(_translate("Main", "32-bit", None))
         self.radioButton64_3.setText(_translate("Main", "64-bit", None))
-        self.toolBar.setWindowTitle(_translate("Main", "toolBar", None))
-        self.toolBar_2.setWindowTitle(_translate("Main", "toolBar_2", None))
-        self.toolBar_3.setWindowTitle(_translate("Main", "toolBar_3", None))
-        self.toolBar_4.setWindowTitle(_translate("Main", "toolBar_4", None))
+        #self.toolBar.setWindowTitle(_translate("Main", "toolBar", None))
+       # self.toolBar_2.setWindowTitle(_translate("Main", "toolBar_2", None))
+        #self.toolBar_3.setWindowTitle(_translate("Main", "toolBar_3", None))
+        #self.toolBar_4.setWindowTitle(_translate("Main", "toolBar_4", None))
 
-	
 
 #################################################################
 if __name__ == "__main__":
