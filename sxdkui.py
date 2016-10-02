@@ -171,10 +171,10 @@ class Ui_Main(object):
     def btnSave(self):
 		os = self.OS_CB.currentText();
 		endian = self.EndiancomboBox.currentText();
-        if 'little' in endian.lower():
-            endian = 'little'
-        else:
-            endian = 'big'
+                if 'little' in endian.lower():
+                        endian = 'little'
+                else:
+                        endian = 'big'
 		NOP = self.Nopslide.value();
 		addsz = self.Addrsz.value();
 		offset = self.offset.value();
