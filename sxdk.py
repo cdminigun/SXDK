@@ -56,7 +56,7 @@ class GenerateShellcode:
         e = open(shells[self.instruction_set.lower()], "r")
         f = open(name, "w")
         shell_data = e.read()
-        c= os.path.getsize(name)
+        c= os.path.getsize(shells[self.instruction_set.lower()], "r")
         b = b - c
         total_nop = b
 
