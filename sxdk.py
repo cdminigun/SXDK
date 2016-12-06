@@ -149,5 +149,12 @@ if __name__ == "__main__":
         genshell.parse_inputs()
     except:
         pass
-    #end
-    genshell.write_file()
+    #Remote execution.
+    if args.remote:
+        genshell.remote(args.remote)
+    #Binary execution.
+    elif args.binary:
+        genshell.binary(args.binary)
+    #General exectuion with output to a file.
+    else:
+        genshell.write_file()
